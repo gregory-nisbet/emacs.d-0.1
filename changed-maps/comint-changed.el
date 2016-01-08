@@ -67,7 +67,7 @@
         ("."           comint-insert-previous-argument)
 
         ("R"         comint-previous-matching-input-from-input)
-        ("S"         comint-next-matching-input-from-input)))
+        ("S"         comint-next-matching-input-from-input))) 
 
 (defun comint-changed//join-kbd (list)
   "join keys space separated list"

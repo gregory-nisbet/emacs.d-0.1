@@ -17,6 +17,7 @@
 (require 'evil)
 (require 'tuareg) ; ocaml
 (require 'php-mode) ; php
+(require 'org)
 
 ;; configuration that doesn't need to come first.
 
@@ -32,7 +33,9 @@
 (setq evil-regexp-search t) ; search uses regular expressions
 
 (setq tramp-default-method "ssh")
-
+;; make the latex fragments bigger
+;; http://tex.stackexchange.com/questions/78501/change-size-of-the-inline-image-for-latex-fragment-in-emacs-org-mode
+(plist-put org-format-latex-options :scale 1.5)
 ;; configure evil-mode
 
 
@@ -81,8 +84,9 @@
 
 (require 'comint-changed)
 (comint-changed/populate-evil-map)
+;; replace the comint C-d with page down
+(define-key comint-mode-map (kbd "C-d") nil) 
 
 ;; other miscellaneous changes
 (recentf-mode +1)
 (show-paren-mode +1)
-
