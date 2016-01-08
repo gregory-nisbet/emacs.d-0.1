@@ -1,0 +1,18 @@
+[submodule "modules/evil-leader"]
+	path = modules/evil-leader
+	url = https://github.com/cofi/evil-leader
+[submodule "modules/evil-mode"]
+	path = modules/evil-mode
+	url = https://github.com/ivucica/evil-mode
+[submodule "modules/nlinum"]
+	path = modules/nlinum
+	url = https://github.com/emacsmirror/nlinum
+[submodule "modules/php-mode"]
+	path = modules/php-mode
+	url = https://github.com/ejmr/php-mode
+[submodule "modules/tuareg"]
+	path = modules/tuareg
+	url = https://github.com/ocaml/tuareg
+[submodule "modules/undo-tree"]
+	path = modules/undo-tree
+	url = https://github.com/emacsmirror/undo-tree
