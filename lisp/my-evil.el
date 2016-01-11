@@ -41,6 +41,20 @@
   (let ((kbd (kbd key)))
     (define-key evil-replace-state-map kbd function)))
 
+(defun my-evil/replace (key funcion)
+  "set key in emacs state"
+  (cl-assert (stringp key) t)
+  (cl-assert (functionp function) t)
+  (let ((kbd (kbd key)))
+    (define-key evil-replace-state-map kbd function)))
+
+(defun my-evil/emacs (key funcion)
+  "set key in emacs state"
+  (cl-assert (stringp key) t)
+  (cl-assert (functionp function) t)
+  (let ((kbd (kbd key)))
+    (define-key evil-emacs-state-map kbd function)))
+
 (defun my-evil//normalize-mode-sequence (modes)
   "internal: normalize \"ovi\" to '(o v i) for use in my-evil/modes"
   (cl-assert (or (stringp modes) (consp modes)))
@@ -64,7 +78,8 @@
            ((string= 'o k) #'my-evil/operator)
            ((string= 'n k) #'my-evil/normal)
            ((string= 'm k) #'my-evil/motion)
-                   ((string= 'r k) #'my-evil/replace)
+           ((string= 'r k) #'my-evil/replace)
+           ((string= 'e k) #'my-evil/emacs)
            (t (cl-assert nil nil "function not one of the accepted abbreviations for evil mode"))))
         modes)))
     (mapcar (lambda (f)

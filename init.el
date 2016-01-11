@@ -8,7 +8,6 @@
 (cl-pushnew "~/.emacs.d/modules/php-mode" load-path)
 (cl-pushnew "~/.emacs.d/changed-maps" load-path)
 
-
 (setq evil-want-C-u-scroll t) ; have to set this before loading evil
 
 (require 'my-evil) ; evil-related helper functions
@@ -52,13 +51,19 @@
 
 
 (my-evil/modes "i" "C-u" #'kill-whole-line) ; pleasant unicism
-(my-evil/modes "vionmr" "M-j" #'evil-window-down)
-(my-evil/modes "vionmr" "M-h" #'evil-window-left)
-(my-evil/modes "vionmr" "M-k" #'evil-window-up)
-(my-evil/modes "vionmr" "M-l" #'evil-window-right)
-(my-evil/modes "vionmr" "M-u" #'previous-buffer)
-(my-evil/modes "vionmr" "M-o" #'next-buffer)
+(my-evil/modes "vionmre" "M-j" #'evil-window-down)
+(my-evil/modes "vionmre" "M-h" #'evil-window-left)
+(my-evil/modes "vionmre" "M-k" #'evil-window-up)
+(my-evil/modes "vionmre" "M-l" #'evil-window-right)
+(my-evil/modes "vionmre" "M-u" #'previous-buffer)
+(my-evil/modes "vionmre" "M-o" #'next-buffer)
 
+(global-set-key (kbd "C-c h") #'mark-paragraph)
+(global-set-key (kbd "C-c j") #'indent-new-comment-line)
+(global-set-key (kbd "C-c k") #'kill-sentence)
+(global-set-key (kbd "C-c l") #'downcase-word)
+(global-set-key (kbd "C-c o") facemenu-keymap)
+(global-set-key (kbd "C-c u") #'upcase-word)
 
 ;; super a s d f g are reserved for emacs, other super are reserved for the window manager
 (my-evil/modes "vionm" "s-f" #'find-file)
@@ -90,3 +95,7 @@
 ;; other miscellaneous changes
 (recentf-mode +1)
 (show-paren-mode +1)
+
+;; alias
+(defalias 'yes-or-no-p 'y-or-n-p)
+(defalias 'list-buffers 'ibuffer)
