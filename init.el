@@ -6,6 +6,7 @@
 (cl-pushnew "~/.emacs.d/modules/undo-tree" load-path)
 (cl-pushnew "~/.emacs.d/modules/tuareg" load-path)
 (cl-pushnew "~/.emacs.d/modules/php-mode" load-path)
+(cl-pushnew "~/.emacs.d/modules/go-mode" load-path)
 (cl-pushnew "~/.emacs.d/changed-maps" load-path)
 
 (setq evil-want-C-u-scroll t) ; have to set this before loading evil
@@ -79,6 +80,7 @@
 ;; set-leader is finicky and doesn't reject keys it doesn't understand
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
+  "SPC" #'evil-forward-WORD-begin
   (kbd "w") #'save-buffer
   (kbd "a") #'evil-beginning-of-visual-line
   (kbd "e") #'evil-end-of-visual-line

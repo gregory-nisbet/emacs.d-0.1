@@ -19,24 +19,3 @@
 [submodule "modules/go-mode"]
 	path = modules/go-mode
 	url = https://github.com/dominikh/go-mode.el
-[submodule "evil-leader"]
-	path = evil-leader
-	url = https://github.com/cofi/evil-leader
-[submodule "evil-mode"]
-	path = evil-mode
-	url = https://github.com/ivucica/evil-mode
-[submodule "nlinum"]
-	path = nlinum
-	url = https://github.com/emacsmirror/nlinum
-[submodule "undo-tree"]
-	path = undo-tree
-	url = https://github.com/emacsmirror/undo-tree
-[submodule "tuareg"]
-	path = tuareg
-	url = https://github.com/ocaml/tuareg
-[submodule "go-mode"]
-	path = go-mode
-	url = https://github.com/dominikh/go-mode.el
-[submodule "php-mode"]
-	path = php-mode
-	url = https://github.com/ejmr/php-mode
