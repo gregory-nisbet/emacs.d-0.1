@@ -7,6 +7,9 @@
 (cl-pushnew "~/.emacs.d/modules/tuareg" load-path)
 (cl-pushnew "~/.emacs.d/modules/php-mode" load-path)
 (cl-pushnew "~/.emacs.d/modules/go-mode" load-path)
+(cl-pushnew "~/.emacs.d/modules/scala-mode2" load-path)
+(cl-pushnew "~/.emacs.d/modules/haskell-mode" load-path)
+(cl-pushnew "~/.emacs.d/modules/clojure-mode" load-path)
 (cl-pushnew "~/.emacs.d/changed-maps" load-path)
 
 ;; I don't really use the universal argument for anything, so this keybinding can stay.
@@ -19,7 +22,9 @@
 (require 'tuareg) ; ocaml
 (require 'php-mode) ; php
 (require 'org)
-(require 'go-mode)
+(require 'go-mode) ; haskell
+(require 'scala-mode2) ; scala
+(require 'haskell-mode) ; haskell
 
 ;; configuration that doesn't need to come first.
 
@@ -89,7 +94,9 @@
 ;; I frequently need to recenter so I am using f5 for that.
 (global-set-key (kbd "<f5>") #'recenter-top-bottom)
 (global-set-key (kbd "M-SPC") #'hippie-expand)
- 
+;; sometimes M-SPC is claimed by the window manager, so
+(global-set-key (kbd "M-/") #'hippie-expand)
+
 ;; super a s d f g are reserved for emacs, other super are reserved for the window manager
 (my-evil/modes "vionm" "s-f" #'find-file)
 
@@ -110,14 +117,11 @@
   (kbd "e") #'evil-end-of-visual-line
   (kbd "j") #'join-line
   (kbd "o") #'open-line
-  (kbd ",") #'evil-repeat-find-char-reverse
   (kbd "u") #'universal-argument
-  (kbd "g") #'recentf-open-files)
-;; workaround for bug in evil-leader
+  (kbd "g") #'recentf-open-files
   (kbd "s") #'evil-substitute
   (kbd "r") #'evil-replace) 
 
-;; load and patch comint 
 
 ;; we need to patch the universal argument map
 (define-key universal-argument-map (kbd "C-u") nil)
@@ -135,9 +139,12 @@
 ;; alias
 (defalias 'yes-or-no-p 'y-or-n-p)
 (defalias 'list-buffers 'ibuffer)
+;; cperl mode is better than perl
+(defalias 'perl-mode 'cperl-mode)
 ;; recentf is the initial buffer way more useful than scratch
 ;; I guess one way to do this is just to call the function
-(setq initial-buffer (recentf-open-files))
+;; blunt instrument. silence the no recent files errors
+(ignore-errors (setq initial-buffer (recentf-open-files)))
 ;; highlighting for current line (seems to work well with a light theme like leuven
 (load-theme 'leuven)
 (require 'highlight-current-line)

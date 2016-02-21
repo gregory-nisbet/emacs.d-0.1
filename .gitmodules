@@ -19,3 +19,15 @@
 [submodule "modules/go-mode"]
 	path = modules/go-mode
 	url = https://github.com/dominikh/go-mode.el
+[submodule "modules/scala-mode2"]
+	path = modules/scala-mode2
+	url = https://github.com/hvesalai/scala-mode2
+[submodule "modules/haskell-mode"]
+	path = modules/haskell-mode
+	url = https://github.com/haskell/haskell-mode
+[submodule "modules/magit"]
+	path = modules/magit
+	url = https://github.com/magit/magit
+[submodule "modules/clojure-mode"]
+	path = modules/clojure-mode
+	url = https://github.com/clojure-emacs/clojure-mode
