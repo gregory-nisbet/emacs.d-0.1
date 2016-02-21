@@ -38,6 +38,7 @@
 ;; configure evil-mode
 
 
+
 ;; current policy is that none of the original emacs keybindings
 ;; (with the possible exception of C-x) should be visible from
 ;; within evil-mode. keybindings beginning with the meta key
@@ -79,13 +80,21 @@
 ;; set-leader is finicky and doesn't reject keys it doesn't understand
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
+  "SPC" #'evil-forward-WORD-begin
   (kbd "w") #'save-buffer
   (kbd "a") #'evil-beginning-of-visual-line
   (kbd "e") #'evil-end-of-visual-line
   (kbd "j") #'join-line
-  (kbd "o") #'open-line)
-
+  (kbd "o") #'open-line
+  (kbd ",") #'evil-repeat-find-char-reverse
+  (kbd "u") #'universal-argument
+  (kbd "r") #'recentf-open-files)
+;; workaround for bug in evil-leader
 ;; load and patch comint 
+
+;; we need to patch the universal argument map
+(define-key universal-argument-map (kbd "C-u") nil)
+(define-key universal-argument-map (kbd "SPC u") 'universal-argument-more)
 
 (require 'comint-changed)
 (comint-changed/populate-evil-map)
