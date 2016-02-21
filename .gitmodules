@@ -16,3 +16,6 @@
 [submodule "modules/undo-tree"]
 	path = modules/undo-tree
 	url = https://github.com/emacsmirror/undo-tree
+[submodule "modules/go-mode"]
+	path = modules/go-mode
+	url = https://github.com/dominikh/go-mode.el
