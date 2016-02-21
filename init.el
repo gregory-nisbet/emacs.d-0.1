@@ -10,6 +10,8 @@
 (cl-pushnew "~/.emacs.d/modules/scala-mode2" load-path)
 (cl-pushnew "~/.emacs.d/modules/haskell-mode" load-path)
 (cl-pushnew "~/.emacs.d/modules/clojure-mode" load-path)
+(cl-pushnew "~/.emacs.d/modules/magit" load-path)
+(cl-pushnew "~/.emacs.d/modules/git-modes" load-path)
 (cl-pushnew "~/.emacs.d/changed-maps" load-path)
 
 ;; I don't really use the universal argument for anything, so this keybinding can stay.
@@ -25,11 +27,14 @@
 (require 'go-mode) ; haskell
 (require 'scala-mode2) ; scala
 (require 'haskell-mode) ; haskell
+(require 'magit) ; excellent git interface (or so I've heard)
 
 ;; configuration that doesn't need to come first.
 
 (setq inhibit-startup-message t)
-(setq nlinum-format "%d  ")
+;; custom linum format for greater legibility
+;; note that linum still sucks when you increase the text size
+(setq nlinum-format " %d  ")
 (setq visual-bell t)
 (setq ring-bell-function #'ignore)   
 (setq tab-width 4)
@@ -80,6 +85,7 @@
 (my-evil/modes "n" "r" #'evil-search-backward)
 ;; evil-mode behave more like vim setup
 ;; j and k go to previous and next visual line
+;; just like nnoremap j gj and nnoremap k gk
 (my-evil/modes "n" "j" #'evil-next-visual-line)
 (my-evil/modes "n" "k" #'evil-previous-visual-line)
 
@@ -95,10 +101,16 @@
 (global-set-key (kbd "<f5>") #'recenter-top-bottom)
 (global-set-key (kbd "M-SPC") #'hippie-expand)
 ;; sometimes M-SPC is claimed by the window manager, so
+;; this is just a cheap hack so that hippie-expand is still usable in
+;; situations like lxde where meta-space is similar to menu key
 (global-set-key (kbd "M-/") #'hippie-expand)
 
 ;; super a s d f g are reserved for emacs, other super are reserved for the window manager
-(my-evil/modes "vionm" "s-f" #'find-file)
+;; these are chosen so as not to conflict with the default xmonad bindings
+(my-evil/modes "vionmre" "s-f" #'find-file)
+(global-set-key (kbd "s-f") #'find-file)
+(my-evil/modes "vionmre" "s-s" #'save-buffer)
+(global-set-key (kbd "s-s") #'save-buffer)
 
 ;; evil configuration
 (add-to-list 'evil-emacs-state-modes 'nav-mode)
@@ -121,7 +133,6 @@
   (kbd "g") #'recentf-open-files
   (kbd "s") #'evil-substitute
   (kbd "r") #'evil-replace) 
-
 
 ;; we need to patch the universal argument map
 (define-key universal-argument-map (kbd "C-u") nil)

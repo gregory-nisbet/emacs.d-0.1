@@ -15,7 +15,13 @@ my @submodules = (
     ["https://github.com/ejmr/php-mode", "php-mode"],
     ["https://github.com/hvesalai/scala-mode2", "scala-mode2"],
     ["https://github.com/haskell/haskell-mode", "haskell-mode"],
+
+    # magit has a whole bunch of dependencies, so let's deal with those now
     ["https://github.com/magit/magit", "magit"],
+    ["https://github.com/magit/git-modes", "git-modes"],
+    ["https://github.com/magnars/dash.el", "dash"],
+    ["https://github.com/magit/with-editor", "with-editor"],
+
     ["https://github.com/clojure-emacs/clojure-mode", "clojure-mode"],
 );
 

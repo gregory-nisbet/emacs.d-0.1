@@ -31,3 +31,12 @@
 [submodule "modules/clojure-mode"]
 	path = modules/clojure-mode
 	url = https://github.com/clojure-emacs/clojure-mode
+[submodule "modules/git-modes"]
+	path = modules/git-modes
+	url = https://github.com/magit/git-modes
+[submodule "modules/dash"]
+	path = modules/dash
+	url = https://github.com/magnars/dash.el
+[submodule "modules/with-editor"]
+	path = modules/with-editor
+	url = https://github.com/magit/with-editor
