@@ -10,10 +10,33 @@
 (cl-pushnew "~/.emacs.d/modules/scala-mode2" load-path)
 (cl-pushnew "~/.emacs.d/modules/haskell-mode" load-path)
 (cl-pushnew "~/.emacs.d/modules/clojure-mode" load-path)
-(cl-pushnew "~/.emacs.d/modules/magit" load-path)
+(cl-pushnew "~/.emacs.d/modules/magit/lisp" load-path)
+(cl-pushnew "~/.emacs.d/modules/dash" load-path)
 (cl-pushnew "~/.emacs.d/modules/git-modes" load-path)
+(cl-pushnew "~/.emacs.d/modules/with-editor" load-path)
 (cl-pushnew "~/.emacs.d/changed-maps" load-path)
 
+;; todo, also include a fairly minimal set of global key rebindings to make emacs more ergonomic.
+;; so convenient keys for navigation and forward/backward word
+
+;; todo recentf complains when a vm is down and it can't access the machine.
+;; this is really obnoxious for the splash page.
+
+;; todo damian conway's vimrc recommends visual block
+;; the normal emacs rectangular highlight is better than visual block
+
+
+
+;; todo emacs mode for dired has an issue where C-u in emacs state does not preserve
+;; the C-u command for doubling up on universal arguments.
+;; I think it would make more sense to make the C-u behavior depend on whether you are in an
+;; evil-like state or a vim-like state
+
+;; todo, make a more evil-like dired with more advanced fuzzy searching capabilities
+
+;; still getting weird tramp mode errors every time I start up. what the heck is going on?
+
+;; it makes a lot of sense to 
 ;; I don't really use the universal argument for anything, so this keybinding can stay.
 (setq evil-want-C-u-scroll t) ; have to set this before loading evil
 
@@ -24,10 +47,11 @@
 (require 'tuareg) ; ocaml
 (require 'php-mode) ; php
 (require 'org)
-(require 'go-mode) ; haskell
+(require 'go-mode) ; for golang
 (require 'scala-mode2) ; scala
 (require 'haskell-mode) ; haskell
 (require 'magit) ; excellent git interface (or so I've heard)
+(require 'highlight-current-line)
 
 ;; configuration that doesn't need to come first.
 
@@ -43,7 +67,10 @@
 (setq recentf-max-menu-items 25)
 (setq enable-recursive-minibuffers)
 (setq evil-regexp-search t) ; search uses regular expressions
-
+;; http://stackoverflow.com/questions/3281581/how-to-word-wrap-in-emacs
+(setq-default word-wrap t) ; enables word wrap without altering the behavior of C-k
+;; use allman style for C
+(cl-pushnew '(c-mode . "bsd") c-default-style)
 
 ;; use ssh instead of sftp for tramp mode by default.
 (setq tramp-default-method "ssh")
@@ -73,6 +100,7 @@
 (my-evil/modes "vionmre" "M-l" #'evil-window-right)
 (my-evil/modes "vionmre" "M-u" #'previous-buffer)
 (my-evil/modes "vionmre" "M-o" #'next-buffer)
+
 
 ;; normal-mode arrow keys for buffer navigation
 (my-evil/modes "n" "<up>" #'other-window)
@@ -144,7 +172,6 @@
 (define-key comint-mode-map (kbd "C-d") nil) 
 
 ;; other miscellaneous changes
-(recentf-mode +1)
 (show-paren-mode +1)
 
 ;; alias
@@ -152,11 +179,19 @@
 (defalias 'list-buffers 'ibuffer)
 ;; cperl mode is better than perl
 (defalias 'perl-mode 'cperl-mode)
+(load-theme 'leuven)
+(highlight-current-line-on t)
+;; I need to fix this section below, but for the moment I will just use the <spc>-g binding
 ;; recentf is the initial buffer way more useful than scratch
 ;; I guess one way to do this is just to call the function
 ;; blunt instrument. silence the no recent files errors
-(ignore-errors (setq initial-buffer (recentf-open-files)))
+;; (ignore-errors (setq initial-buffer (recentf-open-files)))
 ;; highlighting for current line (seems to work well with a light theme like leuven
-(load-theme 'leuven)
-(require 'highlight-current-line)
-(highlight-current-line-on t)
+
+;; recentf can fail to initialize in the case of inaccessible hosts over tramp mode.
+;; seems weird
+;; ignore errors here only
+(unwind-protect
+    (recentf-mode +1)
+  ;; open recent files in splash page
+  (recentf-open-files))
