@@ -16,6 +16,31 @@
 (cl-pushnew "~/.emacs.d/modules/with-editor" load-path)
 (cl-pushnew "~/.emacs.d/changed-maps" load-path)
 
+
+;; new-shell defun (stolen from tikhon jelvis' emacs config
+
+;; todo make space exit the minibuffer prompt for certain things
+
+                                        ; SHELL BUFFERS
+;; I want an easy command for opening new shells:
+(defun new-shell (name)
+  "Opens a new shell buffer with the given name in
+asterisks (*name*) in the current directory with and changes the
+prompt to name>."
+  
+  (interactive "sName: ")
+  ;; decorate name with asterisks for some reason
+  (pop-to-buffer (concat "*" name "*"))
+  (unless (eq major-mode 'shell-mode)
+    (shell (current-buffer))
+    (sleep-for 0 200)
+    (delete-region (point-min) (point-max))
+    (comint-simple-send (get-buffer-process (current-buffer))
+                        ;; squiggly
+                        (concat "export PS1=\"\033[33m" name "\033[0m:\033[35m\\W\033[0m>\""))))
+(global-set-key (kbd "C-c s") 'new-shell)
+
+
 ;; todo, also include a fairly minimal set of global key rebindings to make emacs more ergonomic.
 ;; so convenient keys for navigation and forward/backward word
 
