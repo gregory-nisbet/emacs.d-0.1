@@ -40,3 +40,6 @@
 [submodule "modules/with-editor"]
 	path = modules/with-editor
 	url = https://github.com/magit/with-editor
+[submodule "modules/proof-general"]
+	path = modules/proof-general
+	url = https://github.com/ProofGeneral/PG

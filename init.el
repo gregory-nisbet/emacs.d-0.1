@@ -14,6 +14,8 @@
 (cl-pushnew "~/.emacs.d/modules/dash" load-path)
 (cl-pushnew "~/.emacs.d/modules/git-modes" load-path)
 (cl-pushnew "~/.emacs.d/modules/with-editor" load-path)
+(cl-pushnew "~/.emacs.d/modules/proof-general/coq" load-path)
+(cl-pushnew "~/.emacs.d/modules/proof-general/generic" load-path)
 (cl-pushnew "~/.emacs.d/changed-maps" load-path)
 
 
@@ -40,6 +42,15 @@ prompt to name>."
                         (concat "export PS1=\"\033[33m" name "\033[0m:\033[35m\\W\033[0m>\""))))
 (global-set-key (kbd "C-c s") 'new-shell)
 
+;; doesn't work yet
+(defun connect-remote-ssh (username hostname)
+  "connect to a remote machine with name (name)"
+  (interactive "sUser: \nsHost: ")
+  (let
+      ((file-loc (format "/:ssh:%s@%s:/" username hostname)))
+    (find-file file-loc)))
+(global-set-key (kbd "C-c SPC") 'connect-remote-ssh)
+
 
 ;; todo, also include a fairly minimal set of global key rebindings to make emacs more ergonomic.
 ;; so convenient keys for navigation and forward/backward word
@@ -65,6 +76,11 @@ prompt to name>."
 ;; I don't really use the universal argument for anything, so this keybinding can stay.
 (setq evil-want-C-u-scroll t) ; have to set this before loading evil
 
+;;  prevent coq from compiling right off the bat
+;; (setq coq-compile-before-require nil)
+;; I have no idea why you might need this
+;; (setq coq-compile-parallel-in-background nil)
+
 (require 'my-evil) ; evil-related helper functions
 (require 'evil-leader) ; manage bindings beginning with "<SPC>"
 (require 'nlinum) ; better line numbering
@@ -77,6 +93,9 @@ prompt to name>."
 (require 'haskell-mode) ; haskell
 (require 'magit) ; excellent git interface (or so I've heard)
 (require 'highlight-current-line)
+
+;; according to my sources, this should be enough
+(require 'proof-site "~/.emacs.d/modules/proof-general/generic/proof-site")
 
 ;; configuration that doesn't need to come first.
 
@@ -176,7 +195,7 @@ prompt to name>."
 ;; set-leader is finicky and doesn't reject keys it doesn't understand
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
-  "SPC" #'evil-forward-WORD-begin
+  "SPC" #'(lambda () (interactive) (evil-next-visual-line 16))
   (kbd "w") #'save-buffer
   (kbd "a") #'evil-beginning-of-visual-line
   (kbd "e") #'evil-end-of-visual-line

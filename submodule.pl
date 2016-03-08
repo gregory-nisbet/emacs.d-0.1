@@ -23,6 +23,8 @@ my @submodules = (
     ["https://github.com/magit/with-editor", "with-editor"],
 
     ["https://github.com/clojure-emacs/clojure-mode", "clojure-mode"],
+    # proof general mode
+    ["https://github.com/ProofGeneral/PG", "proof-general"],
 );
 
 chdir "$ENV{HOME}/.emacs.d/modules";
